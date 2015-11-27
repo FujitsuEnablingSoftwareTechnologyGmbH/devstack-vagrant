@@ -1,0 +1,3 @@
+---
+devstack_repo: git://github.com/openstack-dev/devstack.git
+version: stable/kilo

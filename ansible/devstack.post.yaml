@@ -1,0 +1,20 @@
+---
+- hosts: devstack
+  vars:
+    openrc: . ~/devstack/openrc admin;
+
+  tasks:
+    - name: stop firewall
+      service: name=firewalld state=stopped
+      sudo: true
+
+    - name: set ip masquerade
+      command: iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+      sudo: true
+
+    - name: add L0 Ubuntu DNS to private-subnet
+      shell: "{{ openrc }} neutron subnet-update --dns-nameserver 192.168.121.1 private-subnet"
+      args: {executable: /bin/bash}
+      become: true
+      become_user: stack
+      become_method: sudo

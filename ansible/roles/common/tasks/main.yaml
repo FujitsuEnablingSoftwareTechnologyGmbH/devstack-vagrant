@@ -1,0 +1,34 @@
+---
+
+- name: install git
+  yum: name=git
+  sudo: True
+
+- name: allow wheel group to sudo without password
+  copy: src=wheel dest=/etc/sudoers.d/wheel
+  sudo: True
+
+- name: create group libvirtd
+  group: name=libvirtd
+  sudo: True
+
+- name: add stack user
+  user:
+    name: stack
+    groups: wheel,libvirtd
+  sudo: True
+
+- name: https settings for git
+  command: git config --global {{ item }}
+  with_items:
+  - url."https://github.com/".insteadOf "git@github.com:"
+  - url."https://".insteadOf git://
+  become: true
+  become_user: stack
+  become_method: sudo
+
+- name: checkout devstack
+  git: repo={{ devstack_repo }} dest=/home/stack/devstack version={{ version }} accept_hostkey=yes
+  become: true
+  become_user: stack
+  become_method: sudo

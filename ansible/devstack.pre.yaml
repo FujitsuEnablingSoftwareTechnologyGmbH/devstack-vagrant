@@ -1,0 +1,9 @@
+---
+- hosts: all
+  roles:
+    - common
+
+  tasks:
+    - name: local.conf
+      copy: src=../conf/local.conf dest=/home/stack/devstack/local.conf
+      sudo: true
