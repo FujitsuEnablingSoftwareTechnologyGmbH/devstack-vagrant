@@ -115,10 +115,18 @@ Reboot the system
 
 Start the provisioning of *devstack* in the VM with:
 ```bash
-export DNS_SERVER=10.0.0.1  # your DNS server if you don't want 8.8.8.8
 vagrant up --provider libvirt
 ```
 
+### Environment Variables
+- `DNS_SERVER` set your DNS server if you don't want the default `8.8.8.8`
+- `DEVSTACK_MEM` how much RAM to give to the VM, in MB, defaults to `6144`MB
+- `DEVSTACK_CPUS` how many CPUs to give to the VM, in MB, defaults to `4`
+
+So for custom memory and CPUs, you could do:
+```bash
+DEVSTACK_MEM=8192 DEVSTACK_CPUS=6 vagrant up --provider libvirt
+```
 
 ### Basic Usage
 *Horizon* is running on port `80`, user `demo` or `admin`, password `secretsecret`. To check on the VM's IP address, you can do:

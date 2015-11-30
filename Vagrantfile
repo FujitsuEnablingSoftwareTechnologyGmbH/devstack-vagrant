@@ -94,7 +94,18 @@ Vagrant.configure(2) do |config|
 	#
 	config.vm.define :devstack, primary: true do |devstack|
 	
-		configure_vm(devstack.vm, private_ip: "192.168.123.100", memory: 6*1024, cpus: 4)
+		devstack_mem = ENV['DEVSTACK_MEM']
+		devstack_cpus = ENV['DEVSTACK_CPUS']
+		if devstack_mem.nil? || devstack_mem == ""
+			 devstack_mem = 6*1024
+		end
+		if devstack_cpus.nil? || devstack_cpus == ""
+			 devstack_cpus = 4
+		end
+
+		configure_vm(devstack.vm, private_ip: "192.168.123.100", 
+			memory: devstack_mem, cpus: devstack_cpus)
+
 		apply_ansible(devstack.vm, "./ansible/devstack.pre.yaml")
 		execute_stack_sh(devstack.vm)
 		apply_ansible(devstack.vm, "./ansible/devstack.post.yaml")
