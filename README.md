@@ -119,7 +119,6 @@ vagrant up --provider libvirt
 ```
 
 ### Environment Variables
-- `DNS_SERVER` set your DNS server if you don't want the default `8.8.8.8`
 - `DEVSTACK_MEM` how much RAM to give to the VM, in MB, defaults to `6144`MB
 - `DEVSTACK_CPUS` how many CPUs to give to the VM, in MB, defaults to `4`
 

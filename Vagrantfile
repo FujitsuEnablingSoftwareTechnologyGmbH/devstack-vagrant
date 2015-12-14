@@ -45,20 +45,11 @@ def apply_ansible(vm, playbook, **opts)
 		ansible.host_key_checking = false
 		ansible.playbook = playbook
 		ansible.verbose = "v"
-		%w(sudo sudo_user).each { |s|
-			sym = s.to_sym
-			ansible.instance_variable_set("@#{s}".to_sym, opts[sym]) if opts.has_key?(sym)
-		}
 	end
 end
 
 
 Vagrant.configure(2) do |config|
-
-	# The default DNS server is 8.8.8.8 if it is not set to another address
-	if !ENV['DNS_SERVER'] || ENV['DNS_SERVER'] == ""
-		ENV['DNS_SERVER'] = "8.8.8.8"
-	end
 
 	# ---------------------------------------------------------------------------------------------
 	#
