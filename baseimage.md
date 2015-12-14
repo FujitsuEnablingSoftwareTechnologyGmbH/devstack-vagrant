@@ -15,6 +15,7 @@ vagrant mutate centos-7-minimal.box libvirt
 
 ## Provisioning
 ```bash
+sudo apt-get install virt-manager
 vagrant up base --provider libvirt # Vagrant will wait for guest IP address
 ```
 
