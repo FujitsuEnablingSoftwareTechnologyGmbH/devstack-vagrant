@@ -78,7 +78,7 @@ Vagrant.configure(2) do |config|
 		# Restore Vagrant insecure key.
 		base.vm.provision 'file', source: './conf/vagrant.pub', 
 			destination: '/home/vagrant/.ssh/authorized_keys'
-		base.vm.provision 'shell', inline: 'chmod 600 cp /home/vagrant/.ssh/authorized_keys'
+		base.vm.provision 'shell', inline: 'chmod 600 /home/vagrant/.ssh/authorized_keys'
 
 		# Clean up
 		base.vm.provision 'shell', inline: <<-'EOS'
