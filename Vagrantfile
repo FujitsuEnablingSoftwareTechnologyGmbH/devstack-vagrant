@@ -15,14 +15,6 @@ def configure_vm(vm, **opts)
 		domain.nested = true
 	end
 
-	# If DHCP is disabled, eth1 won't get up. But Vagrant provides ifcfg-eth1 file.
-	vm.provision 'shell', inline: 
-		"systemctl stop NetworkManager; systemctl disable NetworkManager; ifup eth1"
-
-	# eth0 was managed by NetworkManager. We need to create ifcfg-eth0 file.
-	vm.provision 'file', source: './conf/ifcfg-eth0', destination: '/tmp/ifcfg-eth0'
-	vm.provision 'shell', inline: 'cp /tmp/ifcfg-eth0 /etc/sysconfig/network-scripts/'
-
 	# Disable default share, because we dont use it
 	vm.synced_folder ".", "/vagrant", disabled: true
 end
@@ -58,7 +50,7 @@ Vagrant.configure(2) do |config|
 	config.vm.define 'base', autostart: false do |base|
 	
 		configure_vm(base.vm, private_ip: "192.168.123.200", memory: 6*1024, cpus: 4, 
-			box: 'centos-7-minimal', box_version: nil)
+			box: 'centos/7', box_version: '1509.01')
 		base.vm.provision 'shell', inline: 'yum update -y'
 		base.vm.provision 'reload'
 		apply_ansible(base.vm, "./ansible/devstack.pre.yaml")
@@ -73,8 +65,9 @@ Vagrant.configure(2) do |config|
 
 		# Clean up
 		base.vm.provision 'shell', inline: <<-'EOS'
-			rm -rf /opt/VBoxGuestAdditions-*
 			yum clean all
+			# VMs created from this base image may not have eth1
+			rm -f /etc/sysconfig/network-scripts/ifcfg-eth1
 			rm -rf /opt/stack/logs
 		EOS
 	end
