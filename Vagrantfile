@@ -81,10 +81,14 @@ Vagrant.configure(2) do |config|
 		devstack_mem = ENV['DEVSTACK_MEM']
 		devstack_cpus = ENV['DEVSTACK_CPUS']
 		if devstack_mem.nil? || devstack_mem == ""
-			 devstack_mem = 6*1024
+			devstack_mem = 6*1024
+		else
+            devstack_mem = devstack_mem.to_i
 		end
 		if devstack_cpus.nil? || devstack_cpus == ""
-			 devstack_cpus = 4
+			devstack_cpus = 4
+		else
+            devstack_cpus = devstack_cpus.to_i
 		end
 
 		configure_vm(devstack.vm, private_ip: "192.168.123.100", 
