@@ -1,7 +1,7 @@
 def configure_vm(vm, **opts)
 
 	vm.box = opts.fetch(:box, "estfujitsu/devstack-centos7")
-	vm.box_version = opts.fetch(:box_version, "= 1.1")
+	vm.box_version = opts.fetch(:box_version, "= 2.0")
 
 	# To make minions connect to master, we use static IP network.
 	# Since 192.168.121.0/24 and 192.168.122.0/24 are reserved by QEMU in advance, 
@@ -14,6 +14,13 @@ def configure_vm(vm, **opts)
 		domain.cpus = opts.fetch(:cpus, 2)
 		domain.nested = true
 	end
+
+	# NetworkManager needs to be disabled, and eth0 manually configured.
+	# Otherwise, VMs will not be reachable via their floating IP.
+	vm.provision 'shell', inline: "systemctl stop NetworkManager; systemctl disable NetworkManager"
+	vm.provision 'file', source: './conf/ifcfg-eth0', destination: '/tmp/ifcfg-eth0'
+	vm.provision 'shell', inline: 'cp /tmp/ifcfg-eth0 /etc/sysconfig/network-scripts/'
+	vm.provision 'shell', inline: "systemctl restart network"
 
 	# Disable default share, because we dont use it
 	vm.synced_folder ".", "/vagrant", disabled: true
