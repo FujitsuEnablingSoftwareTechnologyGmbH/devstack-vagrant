@@ -139,3 +139,5 @@ After restarting the physical host, the VM unfortunately must be provisioned aga
 vagrant destroy
 vagrant up
 ```
+##License
+Apache
