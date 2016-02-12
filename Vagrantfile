@@ -19,7 +19,7 @@ def configure_vm(vm, **opts)
 	vm.provision 'shell', inline: "systemctl stop NetworkManager; systemctl disable NetworkManager"
 	vm.provision 'file', source: './conf/ifcfg-eth0', destination: '/tmp/ifcfg-eth0'
 	vm.provision 'shell', inline: 'cp /tmp/ifcfg-eth0 /etc/sysconfig/network-scripts/'
-	vm.provision 'shell', inline: "systemctl restart network"
+	vm.provision 'reload'
 
 	# Disable default share, because we dont use it
 	vm.synced_folder ".", "/vagrant", disabled: true
