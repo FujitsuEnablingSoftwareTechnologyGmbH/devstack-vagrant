@@ -56,7 +56,7 @@ Vagrant.configure(2) do |config|
 	config.vm.define 'base', autostart: false do |base|
 	
 		configure_vm(base.vm, private_ip: "192.168.123.200", memory: 6*1024, cpus: 4, 
-			box: 'centos/7', box_version: '1509.01')
+			box: 'centos/7', box_version: '1601.01')
 		base.vm.provision 'shell', inline: 'yum update -y'
 		base.vm.provision 'reload'
 		apply_ansible(base.vm, "./ansible/devstack.pre.yaml")
