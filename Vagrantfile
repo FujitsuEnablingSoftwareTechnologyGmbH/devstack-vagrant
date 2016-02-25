@@ -3,7 +3,6 @@ def configure_vm(vm, **opts)
 	vm.box = opts.fetch(:box, "estfujitsu/devstack-centos7")
 	vm.box_version = opts.fetch(:box_version, "= 2.0")
 
-	# To make minions connect to master, we use static IP network.
 	# Since 192.168.121.0/24 and 192.168.122.0/24 are reserved by QEMU in advance, 
 	# we use 192.168.123.0/24.
 	vm.network 'private_network', ip: opts[:private_ip], libvirt__dhcp_enabled: false, 
@@ -39,7 +38,7 @@ def execute_unstack_sh(vm)
 end
 
 
-def apply_ansible(vm, playbook, **opts)
+def apply_ansible(vm, playbook)
 	vm.provision :ansible do |ansible|
 		ansible.host_key_checking = false
 		ansible.playbook = playbook
@@ -85,18 +84,10 @@ Vagrant.configure(2) do |config|
 	#
 	config.vm.define :devstack, primary: true do |devstack|
 	
-		devstack_mem = ENV['DEVSTACK_MEM']
-		devstack_cpus = ENV['DEVSTACK_CPUS']
-		if devstack_mem.nil? || devstack_mem == ""
-			devstack_mem = 6*1024
-		else
-            devstack_mem = devstack_mem.to_i
-		end
-		if devstack_cpus.nil? || devstack_cpus == ""
-			devstack_cpus = 4
-		else
-            devstack_cpus = devstack_cpus.to_i
-		end
+		devstack_mem = ENV['DEVSTACK_MEM'].to_i
+		devstack_mem = 6*1024 if devstack_mem.zero?
+		devstack_cpus = ENV['DEVSTACK_CPUS'].to_i
+		devstack_cpus = 4 if devstack_cpus.zero?
 
 		configure_vm(devstack.vm, private_ip: "192.168.123.100", 
 			memory: devstack_mem, cpus: devstack_cpus)
