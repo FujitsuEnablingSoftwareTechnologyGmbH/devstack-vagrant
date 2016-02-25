@@ -13,9 +13,9 @@ The purpose of this project is to easily fire up a VM with a running *OpenStack*
 
 ## Preparation of *Ubuntu 14.04.3* Host
 
-### *Virtual machine manager* and `libvirt`
+### `libvirt`
 ```bash
-sudo apt-get install virt-manager libvirt-bin qemu qemu-system-x86
+sudo apt-get install libvirt-bin qemu qemu-system-x86
 ```
 
 ### *Vagrant* 1.7+
@@ -46,9 +46,9 @@ Add *epel* repository:
 sudo yum install epel-release
 ```
 
-### *Virtual machine manager* and `libvirt`
+### `libvirt`
 ```bash
-sudo yum install virt-manager libvirt qemu qemu-system-x86
+sudo yum install libvirt qemu qemu-system-x86
 ```
 
 ### Install Vagrant 1.7+
