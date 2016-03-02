@@ -36,6 +36,15 @@ sudo apt-get update
 sudo apt-get install ansible
 ```
 
+For older versions of Ubuntu
+
+```
+sudo apt-get remove pip
+sudo apt-get install python-setuptools python-dev build-essential
+sudo easy_install pip
+sudo pip install ansible
+```
+
 Reboot system.
 
 
