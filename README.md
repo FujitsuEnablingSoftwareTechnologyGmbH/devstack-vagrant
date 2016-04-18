@@ -21,7 +21,7 @@ sudo apt-get install libvirt-bin qemu qemu-system-x86
 ### *Vagrant* 1.8.1+
 Download from [website](http://www.vagrantup.com/downloads.html), then:
 ```bash
-sudo dpkg -i vagrant_1.7.2_x86_64.deb
+sudo dpkg -i vagrant_1.8.1_x86_64.deb
 sudo apt-get install libvirt-dev
 vagrant plugin install vagrant-libvirt
 vagrant plugin install vagrant-host-shell
@@ -63,7 +63,7 @@ sudo yum install libvirt qemu qemu-system-x86
 ### Install Vagrant 1.8.1+
 Download from [website](http://www.vagrantup.com/downloads.html), then:
 ```
-sudo yum install vagrant_1.7.3_x86_64.rpm
+sudo yum install vagrant_1.8.1_x86_64.rpm
 sudo yum install gcc libvirt-devel
 vagrant plugin install vagrant-libvirt
 vagrant plugin install vagrant-host-shell
@@ -92,7 +92,7 @@ vagrant up --provider libvirt
 
 ### Environment Variables
 - `DEVSTACK_MEM` how much RAM to give to the VM, in MB, defaults to `6144`MB
-- `DEVSTACK_CPUS` how many CPUs to give to the VM, in MB, defaults to `4`
+- `DEVSTACK_CPUS` how many CPUs to give to the VM, defaults to `4`
 
 So for custom memory and CPUs, you could do:
 ```bash
