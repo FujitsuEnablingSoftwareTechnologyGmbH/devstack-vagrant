@@ -18,7 +18,7 @@ The purpose of this project is to easily fire up a VM with a running *OpenStack*
 sudo apt-get install libvirt-bin qemu qemu-system-x86
 ```
 
-### *Vagrant* 1.7+
+### *Vagrant* 1.8.1+
 Download from [website](http://www.vagrantup.com/downloads.html), then:
 ```bash
 sudo dpkg -i vagrant_1.7.2_x86_64.deb
@@ -60,7 +60,7 @@ sudo yum install epel-release
 sudo yum install libvirt qemu qemu-system-x86
 ```
 
-### Install Vagrant 1.7+
+### Install Vagrant 1.8.1+
 Download from [website](http://www.vagrantup.com/downloads.html), then:
 ```
 sudo yum install vagrant_1.7.3_x86_64.rpm
