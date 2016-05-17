@@ -7,3 +7,25 @@
     - name: local.conf
       copy: src=../conf/local.conf dest=/home/stack/devstack/local.conf
       sudo: true
+
+    - name: disable gpg check
+      replace:
+        dest=/etc/yum.conf
+        regexp='^(.*)gpgcheck=(.*)$'
+        replace='gpgcheck=0'
+      sudo: true
+
+    - name: change repo
+      replace:
+        dest=/etc/yum.repos.d/rdo-release.repo
+        regexp='^(.*)baseurl=(.*)$'
+        replace='baseurl=http://mirror.centos.org/centos/7/cloud/x86_64/openstack-kilo/'
+      sudo: true
+
+    - name: disable gpg check in repo
+      replace:
+        dest=/etc/yum.repos.d/rdo-release.repo
+        regexp='^(.*)gpgcheck=(.*)$'
+        replace='gpgcheck=0'
+      sudo: true
+
